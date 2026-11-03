@@ -1,1 +1,40 @@
 
+name: Fetch Internship Offers
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 8 * * 1"
+
+jobs:
+  fetch-offers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Fetch offers from Jooble
+        env:
+          JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
+        run: |
+          python scripts/fetch_offers.py
+
+      - name: Save raw offers as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jooble-raw-offers
+          path: data/offers/raw_offers.json
+          retention-days: 7
+
