@@ -1,1 +1,23 @@
 
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Private profile and local data
+data/profile/
+data/offers/
+output/cv_drafts/
+
+# Temporary files
+*.log
+*.tmp
+
+# Public dashboard data
+!docs/data/matches.json
+
